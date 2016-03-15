@@ -22,16 +22,21 @@ application app_path do
 #  Chef::Log.info("********** The app's rev is '#{app['app_source']['revision']}' **********")
 #  Chef::Log.info("********** The app's app_source is '#{app['app_source']}' **********")
 
-#  file "/some/path/git_wrapper.sh" do
-#    owner "your_user"
-#    mode "0755"
-#    content "#!/bin/sh\nexec /usr/bin/ssh -i /some/path/id_rsa \"$@\""
-#  end
+  file "/tmp/git_wrapper.sh" do
+    owner "ec2-user"
+    mode "0755"
+    content "#!/bin/sh\nexec /usr/bin/ssh -i /tmp/id_rsa \"$@\""
+  end
 
-  application_git app_path do
+  file "/tmp/id_rsa" do
+    content app["app_source"]["ssh_key"]
+  end
+
+  git app_path do
     repository app["app_source"]["url"]
     revision app["app_source"]["revision"]
-    deploy_key app["app_source"]["ssh_key"]
+    ssh_wrapper "/tmp/git_wrapper.sh"
+  #  deploy_key app["app_source"]["ssh_key"]
   end
 
 #  link "#{app_path}/index.js" do
