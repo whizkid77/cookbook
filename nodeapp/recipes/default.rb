@@ -16,7 +16,11 @@ application app_path do
 
 
   Chef::Log.info("********** The app's initial state is '#{node['state']}' **********")
-  Chef::Log.info("********** The app's initial state is '#{app['app_source']}' **********")
+  Chef::Log.info("********** The app's username is '#{app['app_source']['username']}' **********")
+  Chef::Log.info("********** The app's pw is '#{app['app_source']['password']}' **********")
+  Chef::Log.info("********** The app's sshkey is '#{app['app_source']['sshkey']}' **********")
+  Chef::Log.info("********** The app's rev is '#{app['app_source']['revision']}' **********")
+  Chef::Log.info("********** The app's app_source is '#{app['app_source']}' **********")
 
   file "/some/path/git_wrapper.sh" do
     owner "your_user"
