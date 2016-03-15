@@ -12,5 +12,5 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[opsworks-linux-demo-cookbook-nodejs::default]
+      - recipe[nodeapp::default]
     attributes:

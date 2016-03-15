@@ -2,8 +2,8 @@
   "name": "nodeapp",
   "description": "A fabulous new cookbook",
   "long_description": "",
-  "maintainer": "YOUR_COMPANY_NAME",
-  "maintainer_email": "YOUR_EMAIL",
+  "maintainer": "James Lin",
+  "maintainer_email": "james77@gmail.com",
   "license": "none",
   "platforms": {
   },
