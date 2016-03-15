@@ -14,6 +14,16 @@ application app_path do
   environment.update("PORT" => "80")
   environment.update(app["environment"])
 
+
+  Chef::Log.info("********** The app's initial state is '#{node['state']}' **********")
+  Chef::Log.info("********** The app's initial state is '#{app['app_source']}' **********")
+
+  file "/some/path/git_wrapper.sh" do
+    owner "your_user"
+    mode "0755"
+    content "#!/bin/sh\nexec /usr/bin/ssh -i /some/path/id_rsa \"$@\""
+  end
+
   git app_path do
     repository app["app_source"]["url"]
     revision app["app_source"]["revision"]
