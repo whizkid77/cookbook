@@ -21,10 +21,7 @@ application app_path do
 #  Chef::Log.info("********** The app's sshkey is '#{app['app_source']['sshkey']}' **********")
 #  Chef::Log.info("********** The app's rev is '#{app['app_source']['revision']}' **********")
 #  Chef::Log.info("********** The app's app_source is '#{app['app_source']}' **********")
-  Chef::Log.info("********** node '#{node[:base][:username]}' **********")
   Chef::Log.info("********** node '#{node}' **********")
-  Chef::Log.info("********** node '#{:base}' **********")
-  Chef::Log.info("********** node '#{:username}' **********")
 
   file "/tmp/git_wrapper.sh" do
     owner "ec2-user"
