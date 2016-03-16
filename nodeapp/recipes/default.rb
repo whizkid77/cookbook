@@ -1,8 +1,6 @@
 app = search(:aws_opsworks_app).first
 
-time =  Time.new.strftime("%Y%m%d%H%M%S")
-
-app_path = "/srv/#{app['shortname']}/#{time}"
+app_path = "/srv/#{app['shortname']}/#{node['revision']}"
 
 directory "/srv/#{app['shortname']}" do
   owner 'root'
@@ -27,7 +25,8 @@ application app_path do
   environment.update(app["environment"])
 
 
-  Chef::Log.info("********** The app's initial state is '#{node['state']}' **********")
+  Chef::Log.info("********** The app's git revision is '#{node['git_revision']}' **********")
+  Chef::Log.info("********** The app's revision is '#{node['revision']}' **********")
   Chef::Log.info("********** The app's short name is '#{app['shortname']}' **********")
   Chef::Log.info("********** The app's URL is '#{app['app_source']['url']}' **********")
   Chef::Log.info("********** The app's path is '#{app_path}' **********")
