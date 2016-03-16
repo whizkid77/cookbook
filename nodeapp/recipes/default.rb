@@ -1,3 +1,5 @@
+if node['revision']
+
 app = search(:aws_opsworks_app).first
 
 app_path = "/srv/#{app['shortname']}/#{node['revision']}"
@@ -56,3 +58,5 @@ application app_path do
     action [:stop, :enable, :start]
   end
 end
+
+end # if node['revision']
