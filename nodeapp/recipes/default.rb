@@ -27,6 +27,10 @@ application app_path do
   Chef::Log.info("********** 2 '#{node[:opsworks]['deployment'}' **********")
   Chef::Log.info("********** 3 '#{node[:opsworks]}' **********")
   Chef::Log.info("********** 4 '#{node[:opsworks]}' **********")
+  Chef::Log.info("********** 5 '#{app['environment']}' **********")
+  Chef::Log.info("********** 6 '#{app[':environment']}' **********")
+  Chef::Log.info("********** 7 '#{app['environment']['NODE_PATH']}' **********")
+  Chef::Log.info("********** 8 '#{app[':environment']['NODE_PATH']}' **********")
   search("aws_opsworks_app").each do |app|
     Chef::Log.info("********** The app's short name is '#{app['shortname']}' **********")
     Chef::Log.info("********** The app's URL is '#{app['app_source']['url']}' **********")
