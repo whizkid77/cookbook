@@ -50,10 +50,10 @@ application app_path do
     ssh_wrapper "/tmp/git_wrapper.sh"
   end
 
-  service_name "shopworks"
 
   npm_install
   npm_start do
+    service_name "shopworks"
     action [:stop, :enable, :start]
   end
 end
