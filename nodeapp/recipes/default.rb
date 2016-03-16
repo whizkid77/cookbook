@@ -18,6 +18,8 @@ application app_path do
 
 
   Chef::Log.info("********** The app's initial state is '#{node['state']}' **********")
+  Chef::Log.info("ENV: #{node[:deploy]['simplephpapp'][:environment_variables]}")
+  Chef::Log.info("USER_ID: #{node[:deploy]['simplephpapp'][:environment_variables][:NODE_PATH]}")
 
   file "/tmp/git_wrapper.sh" do
     owner "root"
