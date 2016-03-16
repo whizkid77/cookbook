@@ -21,10 +21,6 @@ application app_path do
   Chef::Log.info("********** The app's short name is '#{app['shortname']}' **********")
   Chef::Log.info("********** The app's URL is '#{app['app_source']['url']}' **********")
   Chef::Log.info("********** 7 '#{app['environment']['NODE_PATH']}' **********")
-#  search("aws_opsworks_app").each do |app|
-#    Chef::Log.info("********** The app's short name is '#{app['shortname']}' **********")
-#    Chef::Log.info("********** The app's URL is '#{app['app_source']['url']}' **********")
-#  end
 
   file "/tmp/git_wrapper.sh" do
     owner "root"
@@ -41,19 +37,10 @@ application app_path do
     repository app["app_source"]["url"]
     revision app["app_source"]["revision"]
     ssh_wrapper "/tmp/git_wrapper.sh"
-  #  deploy_key app["app_source"]["ssh_key"]
   end
 
-#  link "#{app_path}/index.js" do
-#    to "#{app_path}/server.js"
-#  end
-
-  ENV['NODE_PATH'] = app['environment']['NODE_PATH']
-
-  Chef::Log.info("********** env '#{ENV}' **********")
   npm_install
   npm_start do
-    Chef::Log.info("********** env inside '#{ENV}' **********")
     action [:stop, :enable, :start]
   end
 end
