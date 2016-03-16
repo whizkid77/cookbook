@@ -50,8 +50,10 @@ application app_path do
 
   ENV['NODE_PATH'] = app['environment']['NODE_PATH']
 
+  Chef::Log.info("********** env '#{ENV}' **********")
   npm_install
   npm_start do
+    Chef::Log.info("********** env inside '#{ENV}' **********")
     action [:stop, :enable, :start]
   end
 end
