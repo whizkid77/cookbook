@@ -4,6 +4,13 @@ time =  Time.new.strftime("%Y%m%d%H%M%S")
 
 app_path = "/srv/#{app['shortname']}/#{time}"
 
+directory '/srv/#{app['shortname']}' do
+  owner 'root'
+  group 'root'
+  mode '0755'
+  action :create
+end
+
 package "git" do
   # workaround for:
   # WARNING: The following packages cannot be authenticated!
