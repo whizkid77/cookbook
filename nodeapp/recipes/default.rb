@@ -1,5 +1,8 @@
 app = search(:aws_opsworks_app).first
-app_path = "/srv/#{app['shortname']}"
+
+time =  Time.new.strftime("%Y%m%d%H%M%S")
+
+app_path = "/srv/#{app['shortname']}/#{time}"
 
 package "git" do
   # workaround for:
@@ -20,6 +23,7 @@ application app_path do
   Chef::Log.info("********** The app's initial state is '#{node['state']}' **********")
   Chef::Log.info("********** The app's short name is '#{app['shortname']}' **********")
   Chef::Log.info("********** The app's URL is '#{app['app_source']['url']}' **********")
+  Chef::Log.info("********** The app's path is '#{app_path}' **********")
   Chef::Log.info("********** 7 '#{app['environment']['NODE_PATH']}' **********")
 
   file "/tmp/git_wrapper.sh" do
