@@ -24,7 +24,7 @@ application app_path do
   Chef::Log.info("********** 1.0 '#{app['opsworks']}' **********")
   Chef::Log.info("********** 1.1 '#{node[:opsworks]}' **********")
   Chef::Log.info("********** 1.2 '#{node['opsworks']}' **********")
-  Chef::Log.info("********** 2 '#{node[:opsworks]['deployment'}' **********")
+  Chef::Log.info("********** 2 '#{node[:opsworks]['deployment']}' **********")
   Chef::Log.info("********** 3 '#{node[:opsworks]}' **********")
   Chef::Log.info("********** 4 '#{node[:opsworks]}' **********")
   Chef::Log.info("********** 5 '#{app['environment']}' **********")
