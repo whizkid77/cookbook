@@ -9,6 +9,8 @@ package "git" do
   options "--force-yes" if node["platform"] == "ubuntu" && node["platform_version"] == "14.04"
 end
 
+yum_package 'gcc-c++'
+
 application app_path do
   javascript "5.6.0"
   environment.update("PORT" => "80")
