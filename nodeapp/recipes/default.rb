@@ -20,16 +20,11 @@ application app_path do
   Chef::Log.info("********** The app's initial state is '#{node['state']}' **********")
   Chef::Log.info("********** The app's short name is '#{app['shortname']}' **********")
   Chef::Log.info("********** The app's URL is '#{app['app_source']['url']}' **********")
-  Chef::Log.info("********** 5 '#{app['environment']}' **********")
-  Chef::Log.info("********** 6 '#{app[':environment']}' **********")
   Chef::Log.info("********** 7 '#{app['environment']['NODE_PATH']}' **********")
-  Chef::Log.info("********** 8 '#{app[':environment']['NODE_PATH']}' **********")
-  search("aws_opsworks_app").each do |app|
-    Chef::Log.info("********** The app's short name is '#{app['shortname']}' **********")
-    Chef::Log.info("********** The app's URL is '#{app['app_source']['url']}' **********")
-    Chef::Log.info("ENVa: #{app[:deploy]}")
-    Chef::Log.info("ENVb: #{app['deploy']}")
-  end
+#  search("aws_opsworks_app").each do |app|
+#    Chef::Log.info("********** The app's short name is '#{app['shortname']}' **********")
+#    Chef::Log.info("********** The app's URL is '#{app['app_source']['url']}' **********")
+#  end
 
   file "/tmp/git_wrapper.sh" do
     owner "root"
@@ -52,6 +47,8 @@ application app_path do
 #  link "#{app_path}/index.js" do
 #    to "#{app_path}/server.js"
 #  end
+
+  ENV['NODE_PATH'] = app['environment']['NODE_PATH']
 
   npm_install
   npm_start do
