@@ -10,7 +10,7 @@ package "git" do
 end
 
 application app_path do
-  javascript "5.6"
+  javascript "5.6.0"
   environment.update("PORT" => "80")
   environment.update(app["environment"])
 
