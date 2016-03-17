@@ -11,6 +11,17 @@ directory "/srv/#{app['shortname']}" do
   action :create
 end
 
+# Loop over all user folders
+Dir["/srv/#{app['shortname']}"].sort.reverse.each do |release_dir,index|
+  Chef::Log.info("********** Other releases (#{index}) '#{release_dir}' **********")
+  next if release_dir.start_with?('.')
+  directory release_dir do
+    action :delete
+    recursive true
+    only_if { index > 5 }
+  end
+end
+
 package "git" do
   # workaround for:
   # WARNING: The following packages cannot be authenticated!
