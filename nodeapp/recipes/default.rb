@@ -13,9 +13,8 @@ end
 
 # Loop over all user folders
 Dir.entries("/srv/#{app['shortname']}").sort.reverse.each_with_index do |release_dir,index|
-  Chef::Log.info("********** Other releases (#{index}) '#{release_dir}' **********")
   next if release_dir.start_with?('.')
-  next if index < 3
+  next if index < 5
   Chef::Log.info("********** Pruning old release (#{index}) '#{release_dir}' **********")
   directory "/srv/#{app['shortname']}/#{release_dir}" do
     action :delete
