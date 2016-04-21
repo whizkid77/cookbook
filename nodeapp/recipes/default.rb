@@ -11,41 +11,19 @@ directory "/srv/#{app['shortname']}" do
   action :create
 end
 
-directory "/tmp/#{app['shortname']}" do
-  owner 'root'
-  group 'root'
-  mode '0755'
-  action :create
-end
-
-directory "/tmp/foo" do
-  owner 'root'
-  group 'root'
-  mode '0755'
-  action :create
-end
-
-
-directory "/tmp/bar" do
-  owner 'root'
-  group 'root'
-  mode '0755'
-end
-
-directory "/tmp/baz" do
-  owner 'ec2-user'
-  group 'ec2-user'
-  mode '0755'
-end
-
-# Loop over all user folders
-Dir.entries("/srv/#{app['shortname']}").sort.reverse.each_with_index do |release_dir,index|
-  next if release_dir.start_with?('.')
-  next if index < 5
-  Chef::Log.info("********** Pruning old release (#{index}) '#{release_dir}' **********")
-  directory "/srv/#{app['shortname']}/#{release_dir}" do
-    action :delete
-    recursive true
+# Loop over all user folders.  Wrap in ruby_block because compile-time error occurs if /srv/{APP_SHORT_NAME} does not exist.
+# http://stackoverflow.com/questions/25980820/please-explain-compile-time-vs-run-time-in-chef-recipes
+ruby_block 'prune old deployments' do
+  block 
+    Dir.entries("/srv/#{app['shortname']}").sort.reverse.each_with_index do |release_dir,index|
+      next if release_dir.start_with?('.')
+      next if index < 5
+      Chef::Log.info("********** Pruning old release (#{index}) '#{release_dir}' **********")
+      directory "/srv/#{app['shortname']}/#{release_dir}" do
+        action :delete
+        recursive true
+      end
+    end
   end
 end
 
