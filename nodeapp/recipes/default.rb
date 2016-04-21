@@ -14,7 +14,7 @@ end
 # Loop over all user folders.  Wrap in ruby_block because compile-time error occurs if /srv/{APP_SHORT_NAME} does not exist.
 # http://stackoverflow.com/questions/25980820/please-explain-compile-time-vs-run-time-in-chef-recipes
 ruby_block 'prune old deployments' do
-  block 
+  block do
     Dir.entries("/srv/#{app['shortname']}").sort.reverse.each_with_index do |release_dir,index|
       next if release_dir.start_with?('.')
       next if index < 5
