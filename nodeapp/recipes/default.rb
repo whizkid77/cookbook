@@ -12,13 +12,15 @@ directory "/srv/#{app['shortname']}" do
 end
 
 # Loop over all user folders
-Dir.entries("/srv/#{app['shortname']}").sort.reverse.each_with_index do |release_dir,index|
-  next if release_dir.start_with?('.')
-  next if index < 5
-  Chef::Log.info("********** Pruning old release (#{index}) '#{release_dir}' **********")
-  directory "/srv/#{app['shortname']}/#{release_dir}" do
-    action :delete
-    recursive true
+unless Dir.exist? "/srv/#{app['shortname']}"
+  Dir.entries("/srv/#{app['shortname']}").sort.reverse.each_with_index do |release_dir,index|
+    next if release_dir.start_with?('.')
+    next if index < 5
+    Chef::Log.info("********** Pruning old release (#{index}) '#{release_dir}' **********")
+    directory "/srv/#{app['shortname']}/#{release_dir}" do
+      action :delete
+      recursive true
+    end
   end
 end
 
