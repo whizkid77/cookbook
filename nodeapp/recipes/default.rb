@@ -25,6 +25,19 @@ directory "/tmp/foo" do
   action :create
 end
 
+
+directory "/tmp/bar" do
+  owner 'root'
+  group 'root'
+  mode '0755'
+end
+
+directory "/tmp/baz" do
+  owner 'ec2-user'
+  group 'ec2-user'
+  mode '0755'
+end
+
 # Loop over all user folders
 Dir.entries("/srv/#{app['shortname']}").sort.reverse.each_with_index do |release_dir,index|
   next if release_dir.start_with?('.')
