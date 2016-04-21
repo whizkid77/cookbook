@@ -15,14 +15,12 @@ end
 # http://stackoverflow.com/questions/25980820/please-explain-compile-time-vs-run-time-in-chef-recipes
 ruby_block 'prune old deployments' do
   block do
+    require 'fileutils'
     Dir.entries("/srv/#{app['shortname']}").sort.reverse.each_with_index do |release_dir,index|
       next if release_dir.start_with?('.')
       next if index < 5
       Chef::Log.info("********** Pruning old release (#{index}) '#{release_dir}' **********")
-      directory "/srv/#{app['shortname']}/#{release_dir}" do
-        action :delete
-        recursive true
-      end
+      FileUtils.rm_rf("/srv/#{app['shortname']}/#{release_dir}")
     end
   end
 end
