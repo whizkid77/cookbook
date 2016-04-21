@@ -11,16 +11,28 @@ directory "/srv/#{app['shortname']}" do
   action :create
 end
 
+directory "/tmp/#{app['shortname']}" do
+  owner 'root'
+  group 'root'
+  mode '0755'
+  action :create
+end
+
+directory "/tmp/foo" do
+  owner 'root'
+  group 'root'
+  mode '0755'
+  action :create
+end
+
 # Loop over all user folders
-unless Dir.exist? "/srv/#{app['shortname']}"
-  Dir.entries("/srv/#{app['shortname']}").sort.reverse.each_with_index do |release_dir,index|
-    next if release_dir.start_with?('.')
-    next if index < 5
-    Chef::Log.info("********** Pruning old release (#{index}) '#{release_dir}' **********")
-    directory "/srv/#{app['shortname']}/#{release_dir}" do
-      action :delete
-      recursive true
-    end
+Dir.entries("/srv/#{app['shortname']}").sort.reverse.each_with_index do |release_dir,index|
+  next if release_dir.start_with?('.')
+  next if index < 5
+  Chef::Log.info("********** Pruning old release (#{index}) '#{release_dir}' **********")
+  directory "/srv/#{app['shortname']}/#{release_dir}" do
+    action :delete
+    recursive true
   end
 end
 
