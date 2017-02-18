@@ -68,7 +68,7 @@ application app_path do
 
   npm_install
   npm_start do
-    service_name "shopworks"
+    service_name "mynodeapp"
     action [:stop, :enable, :start]
   end
 end
